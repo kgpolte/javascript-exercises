@@ -1,40 +1,33 @@
-// Take in an array of person objects
 const findTheOldest = function(people) {
+    return people.reduce((oldest, current) => getOlderPerson(oldest, current));
+};
 
-    // Initialize variables to hold the oldest person object and their age
-    let oldestPerson;
-    let oldestAge = 0;
+const getOlderPerson = function(oldest, current) {
 
-    // FOR each person in `people`
-    for (person of people) {
+    const thisYear = new Date().getFullYear();
+    let currentAge;
+    let oldestAge;
 
-        // Define an empty variable to store the person's age
-        let age;
-
-        // IF the person is still living
-        if (!person.yearOfDeath) {
-
-            // Set their yearOfDeath to this year
-            person.yearOfDeath = new Date().getFullYear();
-        }
-
-        age = person.yearOfDeath - person.yearOfBirth;
-
-        //IF their age is greater than the current oldest
-        if (age > oldestAge) {
-
-            // Set the oldest person variables equal to the current one's values
-            oldestAge = age;
-            oldestPerson = person;
-
-        }
-
+    if (!oldest.yearOfBirth) {
+        return current;
+    } else if (!oldest.yearOfDeath) {
+        oldestAge = thisYear - oldest.yearOfBirth;
+    } else {
+        oldestAge = oldest.yearOfDeath - oldest.yearOfBirth;
     }
 
-    // RETURN the oldest person
-    return oldestPerson;
+    if (!current.yearOfDeath) {
+        currentAge = thisYear - current.yearOfBirth;
+    } else {
+        currentAge = current.yearOfDeath - current.yearOfBirth;
+    }
 
-};
+    if (currentAge > oldestAge) {
+        return current;
+    } else {
+        return oldest;
+    }
+}
 
 // Do not edit below this line
 module.exports = findTheOldest;

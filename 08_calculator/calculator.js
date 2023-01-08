@@ -7,15 +7,11 @@ const subtract = function(num1, num2) {
 };
 
 const sum = function(numbers) {
-	let total = 0;
-  for (number of numbers) {
-    total = total + number;
-  }
-  return total;
+	return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 };
 
 const multiply = function(numbers) {
-  return numbers.reduce((accumulator, currentValue) => accumulator * currentValue);
+  return numbers.reduce((accumulator, currentValue) => accumulator * currentValue, 1);
 };
 
 const power = function(num, pow) {
@@ -23,11 +19,9 @@ const power = function(num, pow) {
 };
 
 const factorial = function(num) {
-	let total = 1;
-  for (let i = 1; i <= num; i++) {
-    total = total * i;
-  }
-  return total;
+  const factors = Array.from(Array(num + 1).keys());
+  factors.splice(0, 1);
+  return factors.reduce((accumulator, factor) => factor * accumulator, 1);
 };
 
 // Do not edit below this line

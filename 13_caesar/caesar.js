@@ -1,60 +1,35 @@
 const caesar = function(string, shift) {
+    const charCodes = Array.from(string).map(char => char.charCodeAt(0));
+    const encryptedCharCodes = charCodes.map(code => shiftCharCode(code, shift));
+    const encryptedChars = encryptedCharCodes.map(code => String.fromCharCode(code));
+    return encryptedChars.join('');
+};
 
-    // Alphabet definitions
-    uppers = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-              'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-    lowers = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-              'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    
-    let encrypted = '';
+const shiftCharCode = function(code, shift) {
 
-    for (char of string) {
+    let shiftedCode;
 
-        // Try uppercase letters
-        let charIndex = uppers.indexOf(char);
-        if (charIndex >= 0) {
-
-            let shiftedIndex = charIndex + shift;
-
-            while (shiftedIndex > 25) {
-                shiftedIndex = shiftedIndex - 26;
-            }
-
-            while (shiftedIndex < 0) {
-                shiftedIndex = shiftedIndex + 26;
-            }
-
-            encrypted = encrypted + uppers.at(shiftedIndex);
-            continue;
+    if (code > 64 && code < 91) {
+        shiftedCode = code + shift;
+        while (shiftedCode > 90) {
+            shiftedCode -= 26;
         }
-
-        // If no uppercase match, Try lowercase letters
-        charIndex = lowers.indexOf(char);
-        if (charIndex >= 0) {
-
-            let shiftedIndex = charIndex + shift;
-
-            while (shiftedIndex > 25) {
-                shiftedIndex = shiftedIndex - 26;
-            }
-
-            while (shiftedIndex < 0) {
-                shiftedIndex = shiftedIndex + 26;
-            }
-
-            encrypted = encrypted + lowers.at(shiftedIndex);
-            continue;
+        while (shiftedCode < 65) {
+            shiftedCode += 26;
         }
-        
-        // Handle non-letter characters
-        if (charIndex == -1) {
-            encrypted = encrypted + char;
+    } else if (code > 96 && code < 123) {
+        shiftedCode = code + shift;
+        while (shiftedCode > 122) {
+            shiftedCode -= 26;
         }
-
+        while (shiftedCode < 97) {
+            shiftedCode += 26;
+        }
+    } else {
+        shiftedCode = code;
     }
 
-    return encrypted;
-
+    return shiftedCode;
 };
 
 // Do not edit below this line
